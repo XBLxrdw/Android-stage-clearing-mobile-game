@@ -5,4 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Player/PlayerData", fileName = "Player_Static_Data")]
 public class Player_Static_Data : ScriptableObject
 {
+    [Tooltip("玩家移动加速度")] public float moveAcceleration;
+    [Tooltip("玩家转弯弧度")] public float turnAngle;
 }

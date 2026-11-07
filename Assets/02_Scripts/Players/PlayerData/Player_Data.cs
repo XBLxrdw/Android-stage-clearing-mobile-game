@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player_Data : MonoBehaviour
 {
     [Tooltip("玩家位置")]public Transform playerTransform;
+    [Tooltip("玩家当前分数")] public int currentSco;
+    [Tooltip("玩家上一次的分数")]public int lastSco;
+    [Tooltip("玩家移动路程")] public float distance;
     [Tooltip("玩家移动速度")] public float speed;
     [Tooltip("玩家动画状态")] public Animator animator;
     [Tooltip("玩家音效")] public AudioSource audioSource;
@@ -22,11 +25,8 @@ public class Player_Data : MonoBehaviour
     [Tooltip("玩家是否移动")] public bool isMove;
     [Tooltip("玩家是否在转弯")] public bool isTurn;
     [Tooltip("玩家是否正确朝向")] public bool isCorrectDirection;
-    [Tooltip("玩家转弯弧度")] public float turnAngle;
     [Tooltip("玩家是否死亡")] public bool isDead;
     [Tooltip("玩家是否处于无敌状态")] public bool isInvincible;
-    [Tooltip("玩家移动加速度")] public float moveAcceleration;
-    
     private void Awake()
     {
         moveDir = Quaternion.Euler(0, 0, -50) * Vector2.right;

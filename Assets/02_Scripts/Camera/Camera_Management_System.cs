@@ -1,6 +1,8 @@
 using UnityEngine;
-
-public class CameraManagementSystem : MonoBehaviour
+/// <summary>
+/// 摄像机控制
+/// </summary>
+public class Camera_Management_System : MonoBehaviour
 {
     private Player_Data data;
     private Transform thistransform;

@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6d4b4f4aa5e4b45ae75073c2f25b3b, type: 3}
   m_Name: Player_Static_Data
   m_EditorClassIdentifier: 
+  moveAcceleration: 6
+  turnAngle: 90
