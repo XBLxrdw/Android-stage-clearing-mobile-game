@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem.LowLevel;
 /// <summary>
 /// 玩家待机状态
 /// </summary>
@@ -16,6 +17,8 @@ public class PlayerState_Idle : PlayerState
     public override void Exit()//退出
     {
         base.Exit();
+        data.isMove = false;
+        data.rigidbody.linearVelocity = Vector2.zero;
     }
     public override void LogicUpdate()//逻辑更新
     {
@@ -52,21 +55,13 @@ public class PlayerState_Idle : PlayerState
                 data.isMove = true;
             }
         }
-        //如果死亡
-        if (data.isDead)
+        //判断死亡
+        if (Mathf.Abs(data.transform.position.x) >= 4.5f || data.isDead)
         {
-            data.lastSco = data.currentSco;
-            data.currentSco = 0;
-            data.distance = 0;
-            if (data.isOneLife)//是否是一命
-            {
-
-            }
-            else
-            {
-
-            }
+            data.isDead = true;
+            playerStateMachine.SwitchState(typeof(PlayerState_Die));//切换状态
         }
+
     }
     public override void PhysicsUpdate()//物理更新
     {

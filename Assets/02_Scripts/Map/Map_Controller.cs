@@ -11,7 +11,7 @@ public class Map_Controller : Editor
         base.DrawDefaultInspector();
         if (GUILayout.Button("生成地图"))
         {
-            ((Map_Generation)target).GenerateMap();
+            ((Map_Generation)target).GenerateMap(SaveData.Instance.Seed);
         }
         if (GUILayout.Button("删除地图"))
         {

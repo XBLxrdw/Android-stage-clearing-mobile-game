@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player_Static_Data
   m_EditorClassIdentifier: 
   moveAcceleration: 6
-  turnAngle: 90
+  turnAngle: 100

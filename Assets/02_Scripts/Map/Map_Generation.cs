@@ -29,14 +29,12 @@ public class Map_Generation : MonoBehaviour
     {
         data = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Data>();
     }
-    public void GenerateMap()
+    public void GenerateMap(int seed)//地图生成
     {
         bottomRight.position = new Vector3(bottomRight.position.x, UnityEngine.Random.Range(-56f, -69f), bottomRight.position.z);//后续加入关卡的计算
         width = Mathf.Abs((int)(bottomRight.position.x - topLeft.position.x));
         height = Mathf.Abs((int)(bottomRight.position.y - topLeft.position.y));
         mapData = new bool[width, height];
-        seed = Time.time.GetHashCode();
-        UnityEngine.Random.InitState(seed);
         float randomOffset = UnityEngine.Random.Range(-10000f, 10000f);
         for (int x = 0; x < width; x++)
         {

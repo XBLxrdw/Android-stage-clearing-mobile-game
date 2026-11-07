@@ -27,6 +27,8 @@ public class Player_Data : MonoBehaviour
     [Tooltip("玩家是否正确朝向")] public bool isCorrectDirection;
     [Tooltip("玩家是否死亡")] public bool isDead;
     [Tooltip("玩家是否处于无敌状态")] public bool isInvincible;
+    [Tooltip("玩家是否是激励状态")] public bool isBoost;
+    [Tooltip("玩家死亡特效")] public Object die;
     private void Awake()
     {
         moveDir = Quaternion.Euler(0, 0, -50) * Vector2.right;
