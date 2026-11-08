@@ -1,11 +1,11 @@
 using UnityEngine;
-
+/// <summary>
+/// 玩家死亡判断
+/// </summary>
 public class Player_Die : MonoBehaviour
 {
-    public Player_Data data;//玩家数据层
     void Start()
     {
-        data = GetComponentInParent<Player_Data>();
     }
     void Update()
     {
@@ -13,10 +13,9 @@ public class Player_Die : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("玩家死亡");
-        if (other.CompareTag("Slime"))
+        if (other.CompareTag("Slime") && !Player_Data.Instance.isInvincible)
         {
-            data.isDead = true;
+            Player_Data.Instance.isDead = true;
         }
     }
 }

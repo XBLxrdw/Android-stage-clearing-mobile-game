@@ -7,8 +7,10 @@ public class Slime_Controller : MonoBehaviour
 {
     public Object vfx;//特效
     private PlayerController playerScript;
-    private Vector2 size;//大小
+    private Vector3 size;//大小
     private float duration;//变大持续时间
+    public GameObject TextPrefab; //分数显示
+    public Canvas mainCanvas;
     void Start()
     {
         size = transform.localScale;
@@ -24,12 +26,16 @@ public class Slime_Controller : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerScript.SetSco();//计算分数
+            Canvas mainCanvas = FindFirstObjectByType<Canvas>();
+            GameObject go = Instantiate(TextPrefab, mainCanvas.transform);
+            ScoreText dt = go.GetComponent<ScoreText>();
+            dt.Setup(Player_Data.Instance.boostSco, transform.position);
             StartCoroutine(ChangeSize());//启用协程播放效果
             Object.Instantiate(vfx, transform.position, Quaternion.identity,transform);//播放特效
         }
         if (other.CompareTag("Die"))
         {
-            playerScript.data.isDead = true;
+            Player_Data.Instance.isDead = true;
         }
     }
     IEnumerator ChangeSize()

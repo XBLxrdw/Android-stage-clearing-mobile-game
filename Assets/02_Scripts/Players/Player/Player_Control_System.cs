@@ -6,12 +6,10 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Player_Control_System : MonoBehaviour
 {
-    private Player_Data data;//玩家数据层
     private Player_cont inputSystem;//玩家输入系统
     void Awake()
     {
         inputSystem = new Player_cont();//实例化玩家输入系统
-        data = GetComponent<Player_Data>();//获取玩家数据层
 
     }
     void Start()
@@ -20,8 +18,8 @@ public class Player_Control_System : MonoBehaviour
     }
     void Update()
     {
-        data.isStartInput = inputSystem.Move.input.WasPressedThisFrame(); //获取玩家是否有输入
-        data.isStopInput = inputSystem.Move.input.WasReleasedThisFrame();//获取玩家是否停止输入
+        Player_Data.Instance.isStartInput = inputSystem.Move.input.WasPressedThisFrame(); //获取玩家是否有输入
+        Player_Data.Instance.isStopInput = inputSystem.Move.input.WasReleasedThisFrame();//获取玩家是否停止输入
     }
     void FixedUpdate()
     {
@@ -29,13 +27,13 @@ public class Player_Control_System : MonoBehaviour
     }
     public void SetMove(float speed)//设置玩家移动和路程和分数
     {
-        data.rigidbody.linearVelocity = data.dir * speed;//设置玩家移动速度
-        float distance = data.rigidbody.linearVelocity.magnitude * Time.fixedDeltaTime;
-        data.distance += distance;
-        if(data.distance > 0.5f)
+        Player_Data.Instance.rigidbody.linearVelocity = Player_Data.Instance.dir * speed;//设置玩家移动速度
+        float distance = Player_Data.Instance.rigidbody.linearVelocity.magnitude * Time.fixedDeltaTime;
+        Player_Data.Instance.distance += distance;
+        if(Player_Data.Instance.distance > 0.5f)
         {
-            data.distance = 0;
-            data.currentSco += 30;
+            Player_Data.Instance.distance = 0;
+            Player_Data.Instance.currentSco += 30;
         }
     }
 }

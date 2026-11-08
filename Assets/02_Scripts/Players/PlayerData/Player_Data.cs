@@ -1,13 +1,32 @@
+using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
 /// 玩家数据层，存储玩家的所有数据
 /// </summary>
 public class Player_Data : MonoBehaviour
 {
+    private static Player_Data player;
+    public static Player_Data Instance
+    {
+        get
+        {
+            if (player == null)
+            {
+                player = FindFirstObjectByType<Player_Data>();
+            }
+            return player;
+        }
+    }
     [Tooltip("玩家位置")]public Transform playerTransform;
     [Tooltip("玩家当前分数")] public int currentSco;
     [Tooltip("玩家上一次的分数")]public int lastSco;
+    [Tooltip("玩家激励分数")] public int boostSco;
+    [Tooltip("玩家5s连续激励分数")] public int boost5Sco;
+    [Tooltip("玩家起点")] public Transform startPoint;
     [Tooltip("玩家移动路程")] public float distance;
+    [Tooltip("玩家总路程")] public float totalDistance;
+    [Tooltip("总路程")] public float total;
+    [Tooltip("玩家最远抵达")] public float maxDistance;
     [Tooltip("玩家移动速度")] public float speed;
     [Tooltip("玩家动画状态")] public Animator animator;
     [Tooltip("玩家音效")] public AudioSource audioSource;
@@ -28,9 +47,15 @@ public class Player_Data : MonoBehaviour
     [Tooltip("玩家是否死亡")] public bool isDead;
     [Tooltip("玩家是否处于无敌状态")] public bool isInvincible;
     [Tooltip("玩家是否是激励状态")] public bool isBoost;
+    [Tooltip("玩家是否胜利")] public bool isWin;
     [Tooltip("玩家死亡特效")] public Object die;
     private void Awake()
     {
+        Reset();
+    }
+    public void Reset()
+    {
+        startPoint = playerTransform;
         moveDir = Quaternion.Euler(0, 0, -50) * Vector2.right;
         dir40 = Quaternion.Euler(0, 0, -40) * Vector2.right;
         dir = dir50 = moveDir;

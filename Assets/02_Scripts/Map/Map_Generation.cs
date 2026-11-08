@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Map_Generation : MonoBehaviour
 {
-    public Player_Data data;
     public GameObject slime;//史莱姆预制体
     public GameObject trap;//滚石预制体
     public GameObject end;//终点预制体
@@ -27,7 +26,6 @@ public class Map_Generation : MonoBehaviour
     private bool[,] mapData;//地图数据true可通行
     void Start()
     {
-        data = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Data>();
     }
     public void GenerateMap(int seed)//地图生成
     {
@@ -52,6 +50,7 @@ public class Map_Generation : MonoBehaviour
     {
         DeleteMap();
         Object.Instantiate(end, new Vector3(0, bottomRight.position.y-3, 0), Quaternion.identity, transform);//终点生成，后续加入关卡的计算
+        Player_Data.Instance.total = bottomRight.position.y - 3-Player_Data.Instance.startPoint.position.y;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -74,7 +73,7 @@ public class Map_Generation : MonoBehaviour
     }
     public void TrapSpawn()//滚石生成
     {
-        if(data.transform.position.y <= (bottomRight.position.y/3))
+        if(Player_Data.Instance.transform.position.y <= (bottomRight.position.y/3))
         {
             int[] myNumbers = { 7, -7};
             int randomIndex = UnityEngine.Random.Range(0, myNumbers.Length);

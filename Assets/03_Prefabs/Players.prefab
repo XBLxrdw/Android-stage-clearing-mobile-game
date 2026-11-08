@@ -297,8 +297,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0014983118, y: -0.52606463}
-  m_Radius: 0.55993676
+  m_Offset: {x: 0.0014983118, y: -0.33644676}
+  m_Radius: 0.31317472
 --- !u!114 &7487388533381546293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416b44fc6b3552447ba2f94d51caf11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 5311006405079006783}
 --- !u!1 &2279042984232524236
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +563,7 @@ GameObject:
   - component: {fileID: 2917486531975818815}
   - component: {fileID: 4050017728040689999}
   - component: {fileID: 727583452680514720}
+  - component: {fileID: 2240010016271518870}
   m_Layer: 0
   m_Name: Players
   m_TagString: Player
@@ -623,6 +623,7 @@ MonoBehaviour:
   isDead: 0
   isInvincible: 0
   isBoost: 0
+  isWin: 0
   die: {fileID: 3879747656787514621, guid: ab653996e97c0734da275c634269efb0, type: 3}
 --- !u!114 &7904118034248901066
 MonoBehaviour:
@@ -651,6 +652,7 @@ MonoBehaviour:
   states:
   - {fileID: 11400000, guid: 476a845a65a7cd346b31feaf4eb58e24, type: 2}
   - {fileID: 11400000, guid: 08fbcd25f2c9c4b4e81901c4b219441b, type: 2}
+  - {fileID: 11400000, guid: f0f8adc05a134bc479b5f8d7e80064ad, type: 2}
 --- !u!114 &1929231215643981110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2417860c3ed9643a89b80e48e629e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 5311006405079006783}
 --- !u!50 &2917486531975818815
 Rigidbody2D:
   serializedVersion: 5
@@ -852,6 +853,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.0819169, y: -0.13519168}
   m_Radius: 2.2533727
+--- !u!114 &2240010016271518870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886566412258002528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37150d0e673f1bf42a1fe3870099d46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxPrefab: {fileID: 0}
+  vfxMove: {fileID: 0}
+  spawnInterval: 0.05
 --- !u!1 &6410726894705301300
 GameObject:
   m_ObjectHideFlags: 0

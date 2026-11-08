@@ -11,7 +11,6 @@ public class PlayerState : ScriptableObject, IState
     float stateStartTime;//状态开始时间
     protected PlayerStateMachine playerStateMachine;
     protected Animator animator;
-    protected Player_Data data;//玩家数据
     protected Player_Control_System player_Control_System;//玩家控制系统
     protected bool IsAnimationFinished => stateDuration >= animator.GetCurrentAnimatorStateInfo(0).length;//判断动画是否播放完毕
     protected float stateDuration => Time.time - stateStartTime;//状态持续时间
@@ -19,11 +18,10 @@ public class PlayerState : ScriptableObject, IState
     {
         stateHash = Animator.StringToHash(stateName);
     }
-    public void Initialize(PlayerStateMachine playerStateMachine, Animator animator, Player_Data data, Player_Control_System player_Control_System)
+    public void Initialize(PlayerStateMachine playerStateMachine, Animator animator, Player_Control_System player_Control_System)
     {
         this.playerStateMachine = playerStateMachine;
         this.animator = animator;
-        this.data = data;
         this.player_Control_System = player_Control_System;
     }
     public virtual void Enter()

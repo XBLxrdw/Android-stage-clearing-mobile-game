@@ -11,18 +11,18 @@ public class GameFlow : MonoBehaviour
         {
             if (gameFlow == null)
             {
-                gameFlow = new GameFlow();
+                gameFlow = FindFirstObjectByType<GameFlow>();
             }
             return gameFlow;
         }
         
     }
-    private Player_Data data;//玩家数据层
     private Map_Generation map_Generation;//地图生成层
+    private Camera_Management_System camera_Management_System;//摄像头管理层
     private void Awake()
     {
-        data = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Data>();//获取玩家数据层
         map_Generation = GameObject.FindGameObjectWithTag("Map").GetComponent<Map_Generation>();//获取地图生成层
+        camera_Management_System = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera_Management_System>();//获取摄像头管理层
     }
     void Start()
     {
@@ -44,12 +44,12 @@ public class GameFlow : MonoBehaviour
     void Update()
     {
         //检测玩家死亡执行死亡逻辑
-        if (data.isDead)
+        if (Player_Data.Instance.isDead)
         {
             //存档
             //调用死亡动画
             //检测是否是一命
-            if(data.isOneLife)
+            if(Player_Data.Instance.isOneLife)
             {
                 //调用复活逻辑
                 //调出UI界面
@@ -72,11 +72,35 @@ public class GameFlow : MonoBehaviour
     /// </summary>
     public void RestartGame()
     {
-        //调用摄像头遮罩
-        //摄像头向上移动
-        //如果遮罩拉满
-        //重置玩家位置到起点
-        //重置一命
-        //重置分数
+        Invoke(nameof(StartDeathCamera), 1f);
+    }
+
+    private void StartDeathCamera()
+    {
+        camera_Management_System.PlayerDieSetCamera(OnCameraFadeOutFinished);
+    }
+    private void OnCameraFadeOutFinished()
+    {
+        UIManager.Instance.ShowGameplayHint();
+        Player_Data.Instance.transform.position = new Vector3(0,3,0);
+        Player_Data.Instance.isOneLife = true;
+        Player_Data.Instance.lastSco = Player_Data.Instance.currentSco;
+        Player_Data.Instance.currentSco = 0;
+        //玩家最远距离和路程。
+        Player_Data.Instance.Reset();
+        Player_Data.Instance.isDead = false;
+    }
+    /// <summary>
+    /// 一命复活
+    /// </summary>
+    public void OneRevive()
+    {
+        UIManager.Instance.CloseReviveAdPanel();
+        Player_Data.Instance.transform.position = new Vector3(0, Player_Data.Instance.transform.position.y, Player_Data.Instance.transform.position.z);
+        Player_Data.Instance.lastSco = Player_Data.Instance.currentSco;
+        Player_Data.Instance.currentSco = 0;
+        //玩家最远距离和路程。
+        Player_Data.Instance.Reset();
+        Player_Data.Instance.isDead = false;
     }
 }

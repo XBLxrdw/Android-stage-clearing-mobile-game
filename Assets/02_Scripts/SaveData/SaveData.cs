@@ -19,7 +19,7 @@ public class SaveData
         }
     }
     /// <summary>关卡</summary>
-    public int Level;
+    public int Level=1;
     /// <summary>种子</summary>
     public int Seed;
     /// <summary>分数</summary>

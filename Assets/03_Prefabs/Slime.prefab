@@ -332,8 +332,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.006050855, y: -0.16236126}
-  m_Size: {x: 0.41528952, y: 0.42114663}
+  m_Offset: {x: 0.0053845197, y: -0.15943271}
+  m_Size: {x: 0.17407939, y: 0.41528952}
   m_Direction: 0
 --- !u!114 &1601122139704242273
 MonoBehaviour:
@@ -348,6 +348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfx: {fileID: 4837290137232234848, guid: 310fa5a436197524ca31f750a2439387, type: 3}
+  TextPrefab: {fileID: 529050534344350013, guid: f8b46216585b74244862de788ed7aee4, type: 3}
+  mainCanvas: {fileID: 0}
 --- !u!1 &8294617914028609328
 GameObject:
   m_ObjectHideFlags: 0
