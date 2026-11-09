@@ -26,7 +26,7 @@ public class Trap_Controller : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rig.linearVelocity = Vector2 * Random.Range(4, 6);
+        rig.linearVelocity = Vector2 * Random.Range(3, 7);
     }
 
 }

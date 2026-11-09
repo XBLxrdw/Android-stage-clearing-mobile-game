@@ -50,7 +50,7 @@ public class Map_Generation : MonoBehaviour
     {
         DeleteMap();
         Object.Instantiate(end, new Vector3(0, bottomRight.position.y-3, 0), Quaternion.identity, transform);//终点生成，后续加入关卡的计算
-        Player_Data.Instance.total = bottomRight.position.y - 3-Player_Data.Instance.startPoint.position.y;
+        Player_Data.Instance.total = Mathf.Abs(bottomRight.position.y -Player_Data.Instance.startPoint.y);
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -73,13 +73,12 @@ public class Map_Generation : MonoBehaviour
     }
     public void TrapSpawn()//滚石生成
     {
-        if(Player_Data.Instance.transform.position.y <= (bottomRight.position.y/3))
-        {
-            int[] myNumbers = { 7, -7};
-            int randomIndex = UnityEngine.Random.Range(0, myNumbers.Length);
-            int finalNumber = myNumbers[randomIndex];
-            GameObject traps = Object.Instantiate(trap, new Vector3(finalNumber + topLeft.position.x, topLeft.position.y, 0), Quaternion.identity, transform);
-        }
+        Vector3 playerPos = Player_Data.Instance.playerTransform.position;
+        float side = UnityEngine.Random.value < 0.5f ? -1f : 1f;
+        float spawnX = side * UnityEngine.Random.Range(5.5f, 6.5f);
+        float spawnY = playerPos.y + UnityEngine.Random.Range(-2f, 2f);
+        Vector3 spawnPos = new Vector3(spawnX, spawnY, 0f);
+        GameObject stone = Object.Instantiate(trap, spawnPos, Quaternion.identity, transform);
     }
     private void CarvePath()//通道创建
     {

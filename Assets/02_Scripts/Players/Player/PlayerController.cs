@@ -1,5 +1,6 @@
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 /// <summary>
 /// 玩家数据处理层，处理碰撞等死亡等检测。
 /// </summary>
@@ -7,8 +8,10 @@ public class PlayerController : MonoBehaviour
 {
     private float duration;//临时变量持续时间
     private float timesco;//临时变量时间分数
+    private TrailRenderer trailRenderer;//拖尾
     private void Awake()
     {
+        trailRenderer = GetComponent<TrailRenderer>();
     }
     void Start()
     {
@@ -27,7 +30,8 @@ public class PlayerController : MonoBehaviour
         }
         if (Player_Data.Instance.isMove)
         {
-            Player_Data.Instance.totalDistance = Player_Data.Instance.playerTransform.position.y-Player_Data.Instance.startPoint.position.y;
+            SetTrailStatus2();//设置拖尾状态
+            Player_Data.Instance.totalDistance = Mathf.Abs(Player_Data.Instance.playerTransform.position.y-Player_Data.Instance.startPoint.y);
         }
     }
     public void SetMoveDir()//设置玩家转弯时移动方向
@@ -61,5 +65,20 @@ public class PlayerController : MonoBehaviour
         Player_Data.Instance.boost5Sco += 30;
         Player_Data.Instance.currentSco += 30;
         Player_Data.Instance.boostSco += 30;
+    }
+    /// <summary>
+    /// 清除拖尾
+    /// </summary>
+    public void SetTrailStatus()
+    {
+        trailRenderer.emitting = false;
+        trailRenderer.Clear();
+    }
+    /// <summary>
+    /// 开启拖尾
+    /// </summary>
+    public void SetTrailStatus2()
+    {
+        trailRenderer.emitting = true;
     }
 }

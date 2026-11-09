@@ -5,25 +5,37 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Player/State/Win", fileName = "PlayerState_Wie")]
 public class PlayerState_Win : PlayerState
 {
-    private float tick;
     private float winDuration;//胜利临时变量持续时间
+    private float time;
     private Vector2 playerEndTransform;
 
     public override void Enter()
     {
         base.Enter();
+        AudioManager.instance.StopLoopSFX2();
+        AudioManager.instance.PlaySFX(AudioManager.instance.winSound);
         winDuration = 0;
         playerEndTransform = Player_Data.Instance.playerTransform.position;
         Player_Data.Instance.isMove = false;
-        tick = 0;
+        winDuration = 0;
+        time = 0;
     }
 
     public override void Exit()
     {
         base.Exit();
-
+        Player_Data.Instance.isWin = false;
     }
-
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        time += Time.deltaTime;
+        if (time > 4f)
+        {
+            GameFlow.Instance.NextLevel();
+            playerStateMachine.SwitchState(typeof(PlayerState_Idle));//切换状态
+        }
+    }
     public override void PhysicsUpdate()
     {
         SineWaveMove(playerEndTransform);

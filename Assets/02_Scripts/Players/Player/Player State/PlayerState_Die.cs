@@ -9,11 +9,8 @@ public class PlayerState_Die : PlayerState
     public override void Enter()
     {
         base.Enter();
-        if(Player_Data.Instance.totalDistance> Player_Data.Instance.maxDistance)
-        {
-            Player_Data.Instance.maxDistance = Player_Data.Instance.totalDistance;
-        }
-        Player_Data.Instance.distance = 0;
+        AudioManager.instance.StopLoopSFX2();
+        AudioManager.instance.PlaySFX(AudioManager.instance.dead);
         SetModelActive(false);
         Player_Data.Instance.isMove = false;
         Object.Instantiate(Player_Data.Instance.die, Player_Data.Instance.transform.position, Quaternion.identity);

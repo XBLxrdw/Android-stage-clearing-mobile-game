@@ -349,7 +349,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfx: {fileID: 4837290137232234848, guid: 310fa5a436197524ca31f750a2439387, type: 3}
   TextPrefab: {fileID: 529050534344350013, guid: f8b46216585b74244862de788ed7aee4, type: 3}
-  mainCanvas: {fileID: 0}
+  mainCanvas: {fileID: 5076657903116686923, guid: 1528e279f52d91c4dbb534967affacaa, type: 3}
+  childSr: {fileID: 5620300117728969753}
+  textCanvasName: TextUI
 --- !u!1 &8294617914028609328
 GameObject:
   m_ObjectHideFlags: 0

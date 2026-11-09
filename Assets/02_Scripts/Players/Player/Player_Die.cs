@@ -6,6 +6,8 @@ public class Player_Die : MonoBehaviour
 {
     void Start()
     {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.color = Player_Data.Instance.color;
     }
     void Update()
     {
