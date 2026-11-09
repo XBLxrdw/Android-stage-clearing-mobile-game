@@ -5,12 +5,20 @@ using static UnityEngine.ParticleSystem;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    /// <summary>玩家单例，供史莱姆等对象直接引用，避免反复 Find</summary>
+    public static PlayerController Instance { get; private set; }
+
     private float duration;//临时变量持续时间
     private float timesco;//临时变量时间分数
     private TrailRenderer trailRenderer;//拖尾
     private void Awake()
     {
+        Instance = this;
         trailRenderer = GetComponent<TrailRenderer>();
+    }
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
     void Start()
     {

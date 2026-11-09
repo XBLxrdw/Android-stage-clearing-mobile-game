@@ -40,36 +40,73 @@ public class UIManager : MonoBehaviour
         SetInitialUI();
         SetLevel();
     }
+    // 缓存上一次的值，只有真正变化时才刷新 UI，避免每帧分配字符串并重建 TMP 网格
+    private int lastScore = int.MinValue;
+    private int lastLevel = int.MinValue;
+    private int lastPercent = int.MinValue;
+    private int lastBestPercent = int.MinValue;
+    private bool lastJourneyVisible;
+    private bool journeyInitialized;
+
     private void Update()
     {
-        SetLevel();
-        //当前进度：用实时数据算，不依赖上一次残留的 Slider 值
-        float cur = Player_Data.Instance.total > 0f
-            ? Mathf.Clamp01(Player_Data.Instance.totalDistance / Player_Data.Instance.total)
+        Player_Data data = Player_Data.Instance;
+        if (data == null) return;
+
+        // 分数：移动中显示本局分数，停下显示历史最高分
+        int score = data.isMove ? data.currentSco : data.lastSco;
+        if (score != lastScore)
+        {
+            scoreText.text = score.ToString();
+            lastScore = score;
+        }
+
+        // 关卡数字：仅在关卡变化时刷新
+        int level = SaveData.Instance.Level;
+        if (level != lastLevel)
+        {
+            lastLevel = level;
+            SetLevel();
+        }
+
+        // 当前进度：滑条每帧更新（无分配），文字只在整数百分比变化时刷新
+        float cur = data.total > 0f
+            ? Mathf.Clamp01(data.totalDistance / data.total)
             : 0f;
-        //历史最远进度
-        float best = Mathf.Clamp01(Player_Data.Instance.maxDistancePercent);
-        bool hasRecord = best > 0f;
-
-        //分数：移动中显示本局分数，停下显示历史最高分
-        scoreText.text = Player_Data.Instance.isMove
-            ? Player_Data.Instance.currentSco.ToString()
-            : Player_Data.Instance.lastSco.ToString();
-
-        //当前路程进度条
         progressBar.value = cur;
-        progressBarText.text = (cur * 100f).ToString("0") + "%";
 
-        //历史最远进度条：只要有记录就显示；当前进度超过记录时让位
-        bool covered = Player_Data.Instance.isMove && cur >= best;
+        int percent = Mathf.RoundToInt(cur * 100f);
+        if (percent != lastPercent)
+        {
+            progressBarText.text = percent.ToString() + "%";
+            lastPercent = percent;
+        }
+
+        // 历史最远进度
+        float best = Mathf.Clamp01(data.maxDistancePercent);
+        bool hasRecord = best > 0f;
+        bool covered = data.isMove && cur >= best;
         bool show = hasRecord && !covered;
 
-        JourneyProgressBar.gameObject.SetActive(show);
-        JourneyProgressBarText.gameObject.SetActive(show);
+        // 只在显隐状态变化时 SetActive
+        if (!journeyInitialized || show != lastJourneyVisible)
+        {
+            JourneyProgressBar.gameObject.SetActive(show);
+            JourneyProgressBarText.gameObject.SetActive(show);
+            lastJourneyVisible = show;
+            journeyInitialized = true;
+        }
+
         if (show)
         {
             JourneyProgressBar.value = best;
-            JourneyProgressBarText.text = (best * 100f).ToString("0") + "%";
+
+            int bestPercent = Mathf.RoundToInt(best * 100f);
+            if (bestPercent != lastBestPercent)
+            {
+                JourneyProgressBarText.text = bestPercent.ToString() + "%";
+                lastBestPercent = bestPercent;
+            }
         }
     }
     private void SetLevel()//设置关卡数字

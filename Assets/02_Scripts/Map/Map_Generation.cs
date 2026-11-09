@@ -101,7 +101,13 @@ public class Map_Generation : MonoBehaviour
     {
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(transform.GetChild(i).gameObject);
+            GameObject child = transform.GetChild(i).gameObject;
+            // 运行时用 Destroy（延迟到帧末，不阻塞主线程）；
+            // 编辑器里点按钮生成地图时仍在编辑模式，必须用 DestroyImmediate
+            if (Application.isPlaying)
+                Destroy(child);
+            else
+                DestroyImmediate(child);
         }
     }
 }

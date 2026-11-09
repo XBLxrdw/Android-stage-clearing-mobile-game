@@ -13,24 +13,39 @@ public class Slime_Controller : MonoBehaviour
     public Canvas mainCanvas;
     public SpriteRenderer childSr;
     [SerializeField] private string textCanvasName = "TextUI";//分数显示使用的画布
+    // 分数飘字画布全局只查找一次，避免每个史莱姆在 Start 里遍历全场景
+    private static Canvas s_textCanvas;
+
     void Start()
     {
         size = transform.localScale;
-        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();//获取玩家控制层
+
+        // 玩家引用优先取单例，避免 150 个史莱姆各自 GameObject.Find
+        playerScript = PlayerController.Instance;
+        if (playerScript == null)
+            playerScript = FindFirstObjectByType<PlayerController>();
+
+        // 画布：预制体已配置就直接复用，否则仅第一次查找并缓存
         if (mainCanvas == null || mainCanvas.renderMode == RenderMode.WorldSpace)
         {
-            mainCanvas = FindTextCanvas();
+            if (s_textCanvas == null || s_textCanvas.renderMode == RenderMode.WorldSpace)
+                s_textCanvas = FindTextCanvas(textCanvasName);
+            mainCanvas = s_textCanvas;
         }
+        else
+        {
+            s_textCanvas = mainCanvas;
+        }
+
         childSr.color = Player_Data.Instance.color2;
 
     }
     /// <summary>
-    /// 查找分数飘字使用的叠层画布
+    /// 查找分数飘字使用的叠层画布（静态，只应调用一次）
     /// </summary>
-    private Canvas FindTextCanvas()
+    private static Canvas FindTextCanvas(string canvasName)
     {
-        Canvas[] all = FindObjectsByType<Canvas>(FindObjectsSortMode.None);
-        GameObject target = GameObject.Find(textCanvasName);
+        GameObject target = GameObject.Find(canvasName);
         if (target != null)
         {
             Canvas c = target.GetComponent<Canvas>();
