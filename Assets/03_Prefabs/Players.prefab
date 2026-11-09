@@ -609,10 +609,9 @@ MonoBehaviour:
   totalDistance: 0
   total: 0
   maxDistance: 0
-  speed: 5.5
+  maxDistancePercent: 0
+  speed: 4
   animator: {fileID: 5921019319708961032}
-  audioSource: {fileID: 0}
-  hitSound: {fileID: 8300000, guid: 57812ced9fc886a4097fd2836e21c3d8, type: 3}
   playerStaticData: {fileID: 11400000, guid: 8172c4b8902824547aba810d975ef5f7, type: 2}
   rigidbody: {fileID: 2917486531975818815}
   moveDir: {x: 0, y: 0}
@@ -661,6 +660,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 476a845a65a7cd346b31feaf4eb58e24, type: 2}
   - {fileID: 11400000, guid: 08fbcd25f2c9c4b4e81901c4b219441b, type: 2}
   - {fileID: 11400000, guid: f0f8adc05a134bc479b5f8d7e80064ad, type: 2}
+  - {fileID: 11400000, guid: eb91c71a996939b4384f5d06a639802b, type: 2}
 --- !u!114 &1929231215643981110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1.5
+  m_Time: 4
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -763,8 +763,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.64382184
-        value: 0.4449861
+        time: 0.45375836
+        value: 0.53453994
         inSlope: 1.2834218
         outSlope: 1.2834218
         tangentMode: 0
@@ -773,7 +773,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.8258705
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -859,8 +859,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0819169, y: -0.13519168}
-  m_Radius: 2.2533727
+  m_Offset: {x: -0.08191705, y: 0.28066754}
+  m_Radius: 4.729477
 --- !u!114 &2240010016271518870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,9 +873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37150d0e673f1bf42a1fe3870099d46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPrefab: {fileID: 0}
-  vfxMove: {fileID: 0}
-  spawnInterval: 0.05
+  vfxPrefab: {fileID: 3316010443897661717, guid: 0601aae17819785468839cc2bc07baaf, type: 3}
+  vfxMove: {fileID: 879722449409023040, guid: d3ce6296e132b6142a639b24ef40d470, type: 3}
+  spawnInterval: 0.1
 --- !u!1 &6410726894705301300
 GameObject:
   m_ObjectHideFlags: 0

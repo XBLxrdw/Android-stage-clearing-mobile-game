@@ -6,9 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Player/State/Die", fileName = "PlayerState_Die")]
 public class PlayerState_Die : PlayerState
 {
+    private Coroutine countdownCoroutine;
+    public static PlayerState_Die ActiveInstance;
     public override void Enter()
     {
         base.Enter();
+        ActiveInstance = this;
+        AudioManager.instance.StopLoopSFX();
         AudioManager.instance.StopLoopSFX2();
         AudioManager.instance.PlaySFX(AudioManager.instance.dead);
         SetModelActive(false);
@@ -20,7 +24,7 @@ public class PlayerState_Die : PlayerState
             Player_Data.Instance.isOneLife = false;
             //弹出是否复活广告
             UIManager.Instance.ShowReviveAdPanel();
-            player_Control_System.StartCoroutine(Countdown());
+            countdownCoroutine = player_Control_System.StartCoroutine(Countdown());
         }
         else
         {
@@ -33,6 +37,8 @@ public class PlayerState_Die : PlayerState
     {
         base.Exit();
         SetModelActive(true);
+        StopCountdown();
+        if (ActiveInstance == this) ActiveInstance = null;
     }
 
     public override void LogicUpdate()
@@ -53,21 +59,26 @@ public class PlayerState_Die : PlayerState
         yield return new WaitForSeconds(1f);
         UIManager.Instance.Countdown(3);
         yield return new WaitForSeconds(1f);
-        if (!Player_Data.Instance.isDead) yield break; // 如果中途复活了，终止倒计时
+        if (!Player_Data.Instance.isDead || IsReviving) yield break; // 如果中途复活了，终止倒计时
 
         UIManager.Instance.Countdown(2);
         yield return new WaitForSeconds(1f);
-        if (!Player_Data.Instance.isDead) yield break;
+        if (!Player_Data.Instance.isDead || IsReviving) yield break;
 
         UIManager.Instance.Countdown(1);
         yield return new WaitForSeconds(1f);
 
-        if (Player_Data.Instance.isDead)
+        if (Player_Data.Instance.isDead && !IsReviving)
         {
             UIManager.Instance.CloseReviveAdPanel();
-            GameFlow.Instance.RestartGame();
+            if (GameFlow.Instance != null) GameFlow.Instance.RestartGame();
             // 这里调用重开逻辑
         }
+        countdownCoroutine = null;
+    }
+    private static bool IsReviving
+    {
+        get { return GameFlow.Instance != null && GameFlow.Instance.IsReviving; }
     }
     private void SetModelActive(bool active)
     {
@@ -75,6 +86,17 @@ public class PlayerState_Die : PlayerState
         if (model != null)
         {
             model.gameObject.SetActive(active);
+        }
+    }
+    /// <summary>
+    /// 停止协程方法
+    /// </summary>
+    public void StopCountdown()
+    {
+        if (countdownCoroutine != null && player_Control_System != null)
+        {
+            player_Control_System.StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
         }
     }
 }

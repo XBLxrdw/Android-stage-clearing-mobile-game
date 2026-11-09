@@ -9,7 +9,6 @@ public class PlayerState_Boot : PlayerState
     public override void Enter()
     {
         base.Enter();
-        AudioManager.instance.PlayLoopSFX2(AudioManager.instance.ski);
         AudioManager.instance.PlaySFX(AudioManager.instance.perfect);
         Player_Data.Instance.isBoost = true;
         //变颜色
@@ -51,7 +50,7 @@ public class PlayerState_Boot : PlayerState
             UIManager.Instance.CloseGameplayHint();
             if (Player_Data.Instance.isStartInput)//如果开始输入
             {
-                AudioManager.instance.PlayLoopSFX(AudioManager.instance.ski);
+                AudioManager.instance.PlayLoopSFX2(AudioManager.instance.ski);
                 Player_Data.Instance.dir40 *= new Vector2(-1, 1);
                 Player_Data.Instance.dir50 *= new Vector2(-1, 1);
                 Player_Data.Instance.speed -= 0.5f;
@@ -60,7 +59,7 @@ public class PlayerState_Boot : PlayerState
             }
             if (Player_Data.Instance.isStopInput)//如果停止输入
             {
-                AudioManager.instance.StopLoopSFX();
+                AudioManager.instance.StopLoopSFX2();
                 Player_Data.Instance.speed += 0.5f;
                 Player_Data.Instance.isTurn = false;
             }
@@ -73,6 +72,7 @@ public class PlayerState_Boot : PlayerState
             }
             if (Player_Data.Instance.isStopInput)//如果停止输入
             {
+                AudioManager.instance.PlayLoopSFX(AudioManager.instance.ski);
                 Player_Data.Instance.isInvincible = true;
                 Player_Data.Instance.isMove = true;
             }

@@ -41,4 +41,9 @@ public class SaveData
     public float maxDistance;
     /// <summary>最远抵达百分比</summary>
     public float maxDistancePercent;
+    /// <summary>声音开启</summary>
+    public bool isOnSound = true;
+    /// <summary>鼓励语开启</summary>
+    public bool isOnEncourage = true;
+
 }

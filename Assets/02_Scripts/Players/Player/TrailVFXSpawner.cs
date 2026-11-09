@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 /// <summary>
 /// 特效生成器

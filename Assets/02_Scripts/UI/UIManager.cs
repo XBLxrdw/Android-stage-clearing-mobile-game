@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
@@ -32,36 +31,18 @@ public class UIManager : MonoBehaviour
     public GameObject progressBarTextPanel;//路程进度条文字面板
     [Header("需要统一改色的图片 UI")]
     public Image[] imageUIs;
+    public Image[] imageUIs2;//淡色
 
     [Header("需要统一改色的文字 UI")]
     public TextMeshProUGUI[] textUIs;
-    [Header("拖拽设置面板")]
-    public GameObject settingPanel;
-
-    [Header("拖拽 4 个功能按钮 (GameObject)")]
-    public GameObject btnSoundOn;
-    public GameObject btnSoundOff;
-    public GameObject btnEncourageOn;
-    public GameObject btnEncourageOff;
-
     private void Awake()
     {
         SetInitialUI();
         SetLevel();
     }
-    private void Start()
-    {
-        btnSoundOn.GetComponent<Button>().onClick.AddListener(() => SwitchButton(true, false));
-        btnSoundOff.GetComponent<Button>().onClick.AddListener(() => SwitchButton(false, true));
-        btnEncourageOn.GetComponent<Button>().onClick.AddListener(() => SwitchButton(true, false, true));
-        btnEncourageOff.GetComponent<Button>().onClick.AddListener(() => SwitchButton(false, true, true));
-        CanvasGroup group = JourneyProgressBar.GetComponent<CanvasGroup>();
-        group.alpha = 0.5f;
-    }
     private void Update()
     {
         SetLevel();
-
         //当前进度：用实时数据算，不依赖上一次残留的 Slider 值
         float cur = Player_Data.Instance.total > 0f
             ? Mathf.Clamp01(Player_Data.Instance.totalDistance / Player_Data.Instance.total)
@@ -91,24 +72,6 @@ public class UIManager : MonoBehaviour
             JourneyProgressBarText.text = (best * 100f).ToString("0") + "%";
         }
     }
-    private void SwitchButton(bool showOn, bool showOff, bool isEncourage = false)
-    {
-        if (isEncourage)
-        {
-            btnEncourageOn.SetActive(showOn);
-            btnEncourageOff.SetActive(showOff);
-        }
-        else
-        {
-            btnSoundOn.SetActive(showOn);
-            btnSoundOff.SetActive(showOff);
-
-        }
-    }
-    public void ToggleSettingsPanel()
-    {
-        settingPanel.SetActive(!settingPanel.activeSelf);
-    }
     private void SetLevel()//设置关卡数字
     {
         level[0].text = SaveData.Instance.Level.ToString();
@@ -124,6 +87,14 @@ public class UIManager : MonoBehaviour
         foreach (Image img in imageUIs)
         {
             img.color = newColor;
+        }
+        foreach (Image img in imageUIs2)
+        {
+            Color c = newColor;
+            c.r = Mathf.Clamp01(c.r + 0.3f);
+            c.g = Mathf.Clamp01(c.g + 0.3f);
+            c.b = Mathf.Clamp01(c.b + 0.3f);
+            img.color = c;
         }
         foreach (TextMeshProUGUI txt in textUIs)
         {
@@ -174,6 +145,8 @@ public class UIManager : MonoBehaviour
     {
         gameplayHint.SetActive(false);
     }
-    ///
-
+    /// <summary>
+    /// 广告复活按钮
+    /// </summary>
+    /// using UnityEngine;
 }

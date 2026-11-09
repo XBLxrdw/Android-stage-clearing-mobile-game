@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
     /// <summary>
-    /// 开始播放持续音效
+    /// 开始播放持续滑雪音效
     /// </summary>
     public void PlayLoopSFX(AudioClip clip)
     {
@@ -65,9 +65,12 @@ public class AudioManager : MonoBehaviour
             skiSource.Play();
         }
     }
+    /// <summary>
+    /// 开始播放按下滑雪音效
+    /// </summary>
     public void PlayLoopSFX2(AudioClip clip)
     {
-        if (clip != null && skiSource != null)
+        if (clip != null && minskiSource != null)
         {
             if (minskiSource.clip == clip && minskiSource.isPlaying) return;
 

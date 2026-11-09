@@ -57,6 +57,7 @@ public class Player_Data : MonoBehaviour
     }
     public void Reset()
     {
+        speed = 4;
         Player_Data.Instance.transform.localScale = new Vector3(Mathf.Abs(Player_Data.Instance.transform.localScale.x), Player_Data.Instance.transform.localScale.y, Player_Data.Instance.transform.localScale.z);
         moveDir = Quaternion.Euler(0, 0, -50) * Vector2.right;
         dir40 = Quaternion.Euler(0, 0, -40) * Vector2.right;

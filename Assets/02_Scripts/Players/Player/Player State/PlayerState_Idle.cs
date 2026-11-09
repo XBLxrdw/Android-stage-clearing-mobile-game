@@ -15,7 +15,6 @@ public class PlayerState_Idle : PlayerState
     public override void Enter()//进入
     {
         base.Enter();
-        AudioManager.instance.PlayLoopSFX(AudioManager.instance.ski);
         moveSpeed = 4f;
         GameObject.Find("Player").SetActive(true);
         SpriteRenderer sr = Player_Data.Instance.transform.Find("Player/Head").GetComponent<SpriteRenderer>();
@@ -48,7 +47,7 @@ public class PlayerState_Idle : PlayerState
             moveSpeed = Mathf.MoveTowards(moveSpeed, Player_Data.Instance.speed, Player_Data.Instance.playerStaticData.moveAcceleration * Time.deltaTime);//移动速度逐渐接近玩家静态数据的速度
             if (Player_Data.Instance.isStartInput)//如果开始输入
             {
-                AudioManager.instance.PlayLoopSFX(AudioManager.instance.ski);
+                AudioManager.instance.PlayLoopSFX2(AudioManager.instance.ski);
                 Player_Data.Instance.dir40 *= new Vector2(-1, 1);
                 Player_Data.Instance.dir50 *= new Vector2(-1, 1);
                 Player_Data.Instance.speed -= 0.5f;
@@ -57,7 +56,7 @@ public class PlayerState_Idle : PlayerState
             }
             if (Player_Data.Instance.isStopInput)//如果停止输入
             {
-                AudioManager.instance.StopLoopSFX();
+                AudioManager.instance.StopLoopSFX2();
                 Player_Data.Instance.speed += 0.5f;
                 Player_Data.Instance.isTurn = false;
             }
@@ -70,6 +69,7 @@ public class PlayerState_Idle : PlayerState
             }
             if (Player_Data.Instance.isStopInput)//如果停止输入
             {
+                AudioManager.instance.PlayLoopSFX(AudioManager.instance.ski);
                 Player_Data.Instance.isInvincible = true;
                 Player_Data.Instance.isMove = true;
             }

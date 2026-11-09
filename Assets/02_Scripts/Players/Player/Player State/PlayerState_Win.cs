@@ -12,7 +12,7 @@ public class PlayerState_Win : PlayerState
     public override void Enter()
     {
         base.Enter();
-        AudioManager.instance.StopLoopSFX2();
+        AudioManager.instance.StopLoopSFX();
         AudioManager.instance.PlaySFX(AudioManager.instance.winSound);
         winDuration = 0;
         playerEndTransform = Player_Data.Instance.playerTransform.position;
@@ -24,6 +24,7 @@ public class PlayerState_Win : PlayerState
     public override void Exit()
     {
         base.Exit();
+        AudioManager.instance.StopLoopSFX();
         Player_Data.Instance.isWin = false;
     }
     public override void LogicUpdate()
